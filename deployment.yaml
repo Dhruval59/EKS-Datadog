@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: careerapp-deployment
+  labels:
+    app: career-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: career-app
+  template:
+    metadata:
+      labels:
+        app: career-app
+    spec:
+      containers:
+      - name: career-app
+        image: dhruvalsharma59/career-app:latest
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: careerapp-service
+spec:
+  selector:
+    app: career-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer
+
